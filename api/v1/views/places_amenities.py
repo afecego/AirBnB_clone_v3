@@ -34,31 +34,25 @@ def get_place_amenities(place_id):
 
 @app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
-def delete_place_amenity(place_id, amenity_id):
+def delete_place_amenity(place_id=None, amenity_id=None):
     """
     Deletes a Amenity object of a Place
     """
     place = storage.get('Place', place_id)
-
     if place is None:
         abort(404, 'Not found')
-
     amenity = storage.get('Amenity', amenity_id)
-
     if amenity is None:
         abort(404, 'Not found')
 
+    if amenity not in place.amenities and amenity.id not in place.amenities:
+        abort(404, 'Not found')
     if environ.get('HBNB_TYPE_STORAGE') == "db":
-        if amenity not in place.amenities:
-            abort(404, 'Not found')
         place.amenities.remove(amenity)
     else:
-        if amenity_id not in place.amenity_ids:
-            abort(404, 'Not found')
-        place.amenity_ids.remove(amenity_id)
-
-    storage.save()
-    return make_response(jsonify({}), 200)
+        place.amenity_ids.pop(amenity.id, None)
+    place.save()
+    return jsonify({}), 200
 
 
 @app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
