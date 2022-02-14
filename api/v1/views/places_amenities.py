@@ -58,7 +58,7 @@ def delete_place_amenity(place_id=None, amenity_id=None):
 @app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
                  methods=['POST'],
                  strict_slashes=False)
-def post_place_amenity(place_id, amenity_id):
+def post_place_amenity(place_id=None, amenity_id=None):
     """
     Link a Amenity object to a Place
     """
@@ -72,16 +72,10 @@ def post_place_amenity(place_id, amenity_id):
     if amenity is None:
         abort(404, 'Not found')
 
+    if amenity in place.amenities or amenity.id in place.amenities:
+        return jsonify(amenity.to_dict()), 200
     if environ.get('HBNB_TYPE_STORAGE') == "db":
-        if amenity in place.amenities:
-            return make_response(jsonify(amenity.to_dict()), 200)
-        else:
-            place.amenities.append(amenity)
+        place.amenities.append(amenity)
     else:
-        if amenity_id in place.amenity_ids:
-            return make_response(jsonify(amenity.to_dict()), 200)
-        else:
-            place.amenity_ids.append(amenity_id)
-
-    storage.save()
-    return make_response(jsonify(amenity.to_dict()), 201)
+        place.amenities = amenity
+    return jsonify(amenity.to_dict()), 201
