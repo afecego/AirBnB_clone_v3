@@ -3,5 +3,7 @@ GET http://0.0.0.0:5000/api/v1/places/02d9a2b5-7dca-423f-8406-707bc76abf7e/ameni
 
 
 ###
-POST http://0.0.0.0:5000/api/v1/places/02d9a2b5-7dca-423f-8406-707bc76abf7e/amenities/017ec502-e84a-4a0f-92d6-d97e27bb6bdf HTTP/1.1
+POST http://0.0.0.0:5000/api/v1/places/02d9a2b5-7dca-423f-8406-707bc76abf7e/amenities/f4dfd576-7c29-4bdf-9fbd-5c95a170ebce HTTP/1.1
 
+###
+DELETE http://0.0.0.0:5000/api/v1/places/02d9a2b5-7dca-423f-8406-707bc76abf7e/amenities/017ec502-e84a-4a0f-92d6-d97e27bb6bdf HTTP/1.1
