@@ -61,7 +61,8 @@ def delete_place_amenity(place_id, amenity_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>', methods=['POST'],
+@app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
+                 methods=['POST'],
                  strict_slashes=False)
 def post_place_amenity(place_id, amenity_id):
     """
