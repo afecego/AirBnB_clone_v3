@@ -11,6 +11,12 @@ Updates the state info based on ID
       - name: request
         in: body
         required: true
+        requires:
+          - name
+        properties:
+          name:
+            type: string        
+      
 
     responses:
       404:
